@@ -1,10 +1,10 @@
 % $Header: /cvsroot/latex-beamer/latex-beamer/solutions/generic-talks/generic-ornate-15min-45min.en.tex,v 1.5 2007/01/28 20:48:23 tantau Exp $
 
-%\documentclass[handout]{beamer}
-%\usepackage{pgfpages}
-%\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
+\documentclass[handout]{beamer}
+\usepackage{pgfpages}
+\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
 
-\documentclass{beamer}
+%\documentclass{beamer}
 
 \mode<presentation>
 {
@@ -13,6 +13,10 @@
 
   \setbeamercovered{transparent}
   % or whatever (possibly just delete it)
+}
+\mode<handout>
+{
+  \usetheme{boxes}
 }
 
 
@@ -281,6 +285,29 @@ clean: \\
 }
 \end{frame}
 
+
+
+\section{DDD}
+
+\begin{frame}{DDD}
+  \begin{itemize}
+    \item DDD is a powerful graphical layer over \texttt{gdb}.
+    \item In order to use it, make sure you compile your program with
+      \texttt{-g}, and run \\
+      \texttt{ddd ./my\_program}
+    \item The controls and commands are all identical to the ones in
+      \texttt{gdb}. In fact, the bottom part of the screen is actually
+      \texttt{gdb}.\footnote{The Matam tutorial slides have a reference
+      for gdb}
+    \item DDD's powerful graphing abilities make it handy when debugging
+      usage of complex data structures.
+  \end{itemize}
+\end{frame}
+
+\mode<handout> {
+\begin{frame}{DDD Demo}{Empty slide for notes on the demo}
+\end{frame}
+}
 
 \section*{Summary}
 
