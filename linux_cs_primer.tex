@@ -1,0 +1,314 @@
+% $Header: /cvsroot/latex-beamer/latex-beamer/solutions/generic-talks/generic-ornate-15min-45min.en.tex,v 1.5 2007/01/28 20:48:23 tantau Exp $
+
+%\documentclass[handout]{beamer}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]
+
+\documentclass{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\title[Linux CS Primer] {Linux for CS Students}
+
+\subtitle {A primer}
+
+\author{Ohad Lutzky}
+
+\institute
+{
+Department of Computer Science\\
+Technion IIT
+}
+
+\subject{Talks}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+% Since this a solution template for a generic talk, very little can
+% be said about how it should be structured. However, the talk length
+% of between 15min and 45min and the theme suggest that you stick to
+% the following rules:  
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+\begin{frame}{A note about text editors}
+  \begin{itemize}
+    \item Love your text editor or hate your homework
+    \item Important features to have
+      \pause
+      \begin{itemize}
+        \item Syntax highlighting \pause
+        \item Automatic indentation \pause
+        \item Some form of autocompletion \pause
+        \item Jump to error on compilation
+      \end{itemize}
+      \pause
+    \item VIM does it all (\texttt{vimtutor})
+      (\href{http://vim.org}{http://vim.org})
+    \item Cream is an easier VIM
+      (\href{http://cream.sourceforge.net}{http://cream.sourceforge.net})
+      \pause
+    \item So does emacs
+  \end{itemize}
+\end{frame}
+
+\section{Compiling Programs}
+
+\subsection{Using GCC Directly}
+
+\begin{frame}{GCC}{The GNU Compiler Collection}
+  \begin{itemize}
+    \item Modern, full-featured compiler suite
+    \item Compiles and links
+    \item Supports many languages (C, C++, Pascal, Java\ldots)
+    \item T2 currently has version 3.4, modern Linuxes have 4.2
+    \item Available for Windows in Cygwin and DevCPP
+      \pause
+    \item Quite different from Borland C++ or Visual C++
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Basic usage}
+  \begin{itemize}
+    \item Compiling and linking (for programs):\\
+      \texttt{gcc -o my\_app my\_app.c} \\
+    \item This
+      \begin{enumerate}
+        \item compiles your program into object code
+        \item links your program as an executable
+      \end{enumerate}
+      (learn more about it in ATAM)
+    \item Running your program:\\
+      \texttt{\textbf{./}item}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Compiler flags}
+  \begin{itemize}
+    \item \texttt{-ansi} --- Conform to ANSI standard
+    \item \texttt{-Wall} --- All warnings
+    \item \texttt{-pedantic-errors} (no space!) --- be extra pedantic. Also,
+      warnings count as errors
+    \item \texttt{-g} --- debug symbols (required for using debuggers)
+  \end{itemize}
+
+  \texttt{gcc -ansi -Wall -pedantic-errors -o $\backslash$ \\
+  ~~my\_prog my\_prog.c}
+
+~
+
+{\tiny Note: Long lines can be broken using $\backslash$}
+\end{frame}
+
+\begin{frame}{Compiling object files}
+  \begin{itemize}
+    \item \texttt{-c} --- no linking
+    \item By \item{convention}, object files have \texttt{.o} extensions
+    \item Otherwise, same flags as before
+  \end{itemize}
+
+  \texttt{gcc -ansi -Wall -pedantic-errors $\backslash$ \\
+  ~~\textbf{-c} -o my\_lib.\textbf{o} my\_lib.c}
+\end{frame}
+
+\begin{frame}{Linking your application}
+  \begin{itemize}
+    \item Linking gives you a runnable application
+    \item We use \texttt{gcc} for linking (it, in turn, runs \texttt{ld})
+    \item Avoid specifying multiple \texttt{.c} files---compile objects instead
+  \end{itemize}
+
+  \texttt{gcc -o my\_app main.o lib1.o lib2.o \ldots}
+\end{frame}
+
+\begin{frame}{Common caveats}
+  \begin{itemize}
+    \item Circular dependencies
+    \item Unit testing
+    \item \ldots
+  \end{itemize}
+\end{frame}
+
+\subsection{Makefiles}
+
+\begin{frame}{Why makefiles?}
+  \begin{itemize}
+    \item Recompiling happens a \emph{lot}
+    \item \texttt{-Wall -ansi -pedantic-errors -kimchi -\ldots}
+    \item Make recompiles only what needs to be compiled
+    \item Great for distributing programs
+      \pause
+    \item Sometimes\footnote{Operating Systems} required by course staff
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{In practice}
+  \begin{enumerate}
+    \item Create your \texttt{Makefile} (or \texttt{makefile})
+    \item Run \texttt{make}
+    \item Debug and fix your code
+    \item Return to step 2
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{A sample makefile}
+\small
+\texttt{\# Comments start with \# \\
+\# Variable declarations look like this: \\
+\# my\_var=stuff to put in the variable  \\
+\# Use variables like this: \$(my\_var)  \\
+CC=gcc \\
+CFLAGS=-Wall -ansi -pedantic-errors \\
+~\\
+\# Rules look like this: \\
+\# target: prerequisites \ldots \\
+\# ~~~~commands \\ 
+\# ~~~~\dots \\ 
+my\_prog: my\_prog.c \\
+~~~~\$(CC) \$(CFLAGS) -o my\_prog my\_prog.c \\
+~\\
+my\_lib.o: my\_lib.c \\
+~~~~\$(CC) \$(CFLAGS) -c -o my\_lib my\_lib.c \\
+}
+\end{frame}
+
+\begin{frame}{Running make}
+  \begin{itemize}
+    \item Once the \texttt{Makefile} exists, run \texttt{make}
+    \item This will find the first rule and run it.
+    \item Intuitively, running a rule means making sure the target is
+      up-to-date with respect to the prerequisites.
+    \item A rule is run like this:
+      \begin{enumerate}
+        \item If any of the prerequisites are targets of other rules, run
+          those rules (recursively)
+        \item If the target does not exist, or one of the prerequisites is
+          newer than it, or there are no prerequisites, then run the commands
+        \item Otherwise do nothing
+      \end{enumerate}
+    \item To start with a rule other than the first, run:\\
+      \texttt{make my\_target}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A shortcut}{Writing makefiles doesn't have to be tedious}
+\small
+This makefile:
+
+\texttt{CC=gcc \\
+CFLAGS=-Wall -ansi -pedantic-errors \\
+~\\
+my\_prog: my\_prog.c \\
+~~~~\$(CC) \$(CFLAGS) -o my\_prog my\_prog.c \\
+~\\
+my\_lib.o: my\_lib.c \\
+~~~~\$(CC) \$(CFLAGS) -c -o my\_lib my\_lib.c \\
+}
+
+Is identical to this makefile:
+
+\texttt{CC=gcc \\
+CFLAGS=-Wall -ansi -pedantic-errors \\
+~\\
+my\_prog: my\_prog.c \\
+my\_lib.o: my\_lib.c  \# How does make know to use -c?\\
+}
+\end{frame}
+
+\begin{frame}{Some more \texttt{Makefile} tricks}
+\footnotesize
+\texttt{CC=gcc \\
+CFLAGS=-Wall -ansi -pedantic-errors \\
+OBJECTS=my\_prog.o lib1.o lib2.o \\
+HEADERS=header1.h header2.h \\
+\# A special 'phony' rule (there's no such file \\
+\# 'all'). Compile my\_prog by default. \\
+all: my\_prog \\
+\# If headers change, recompile everything\\
+lib1.o: lib1.c \$(HEADERS) \\
+lib2.o: lib2.c \$(HEADERS) \\
+\# Your main program is a library too; link it \\
+\# separately. \\
+my\_prog.o: my\_prog.c \$(HEADERS) \\
+my\_prog: my\_prog.c \$(OBJECTS) \\
+\# Another phony rule (run 'make clean') \\
+clean: \\
+~~~~rm -f my\_prog \$(OBJECTS)
+}
+\end{frame}
+
+
+\section*{Summary}
+
+\begin{frame}{Summary}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item
+    The \alert{first main message} of your talk in one or two lines.
+  \item
+    The \alert{second main message} of your talk in one or two lines.
+  \item
+    Perhaps a \alert{third message}, but not more than that.
+  \end{itemize}
+  
+  % The following outlook is optional.
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Outlook
+    \begin{itemize}
+    \item
+      Something you haven't solved.
+    \item
+      Something else you haven't solved.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
