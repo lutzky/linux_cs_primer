@@ -167,6 +167,11 @@ Technion IIT
   \end{itemize}
 
   \texttt{gcc -o my\_app main.o lib1.o lib2.o \ldots}
+
+  \begin{itemize}
+    \item Note: For linking C++ programs, use \texttt{g++} instead of
+      \texttt{gcc}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Common caveats}
@@ -283,6 +288,27 @@ my\_prog: my\_prog.c \$(OBJECTS) \\
 clean: \\
 ~~~~rm -f my\_prog \$(OBJECTS)
 }
+\end{frame}
+
+\begin{frame}{Link flags}
+  Sometimes it is useful to link your application against a common library.
+  For example, to use the functions from \texttt{math.h}, you need to link
+  against the mathematical library:
+
+  \texttt{gcc -c -o uses\_math.o uses\_math.c\\
+  gcc \textbf{-lm} -o uses\_math uses\_math.o}
+
+  To set linking flags from a makefile, use \texttt{LDFLAGS}.
+\end{frame}
+
+\begin{frame}{Regarding C++}
+  When compiling C++ applications, note that:
+  \begin{itemize}
+    \item You should set both \texttt{CC} and \texttt{CXX} to \texttt{g++}.
+      \texttt{CXX} is the C++ compiler, and \texttt{CC} is the linker.
+    \item Use \texttt{CXXFLAGS} instead of \texttt{CFLAGS}. For linking
+      flags, still use \texttt{LDFLAGS}.
+  \end{itemize}
 \end{frame}
 
 
