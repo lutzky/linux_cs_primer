@@ -309,6 +309,34 @@ clean: \\
 \end{frame}
 }
 
+\section{Valgrind}
+
+\begin{frame}{Valgrind}
+  \begin{itemize}
+    \item Valgrind checks your programs for memory errors
+      \begin{itemize}
+        \item Memory leaks
+        \item Outcomes depending on uninitialized memory
+        \item Writing to unallocated memory
+        \item \ldots{}and more
+      \end{itemize}
+    \item Doesn't run on all platforms
+      \begin{itemize}
+        \item Installed in the farm
+        \item Will probably run on your Linux at home (on an x86 processor)
+        \item Doesn't run on T2 (it's a SPARC)
+      \end{itemize}
+    \item Pay attention to its messages (For example, it might recommend
+      \texttt{--leak-check=full})
+  \end{itemize}
+\end{frame}
+
+\mode<handout> {
+\begin{frame}{Valgrind Demo}{Empty slide for notes on the demo}
+\end{frame}
+}
+
+
 \section*{Summary}
 
 \begin{frame}{Summary}
@@ -316,24 +344,11 @@ clean: \\
   % Keep the summary *very short*.
   \begin{itemize}
   \item
-    The \alert{first main message} of your talk in one or two lines.
+    Makefiles are a powerful timesaving tool
   \item
-    The \alert{second main message} of your talk in one or two lines.
+    DDD provides a sane way to look at your code running
   \item
-    Perhaps a \alert{third message}, but not more than that.
-  \end{itemize}
-  
-  % The following outlook is optional.
-  \vskip0pt plus.5fill
-  \begin{itemize}
-  \item
-    Outlook
-    \begin{itemize}
-    \item
-      Something you haven't solved.
-    \item
-      Something else you haven't solved.
-    \end{itemize}
+    Valgrind helps keep your code sane
   \end{itemize}
 \end{frame}
 
