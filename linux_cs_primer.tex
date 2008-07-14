@@ -283,7 +283,7 @@ lib2.o: lib2.c \$(HEADERS) \\
 \# Your main program is a library too; link it \\
 \# separately. \\
 my\_prog.o: my\_prog.c \$(HEADERS) \\
-my\_prog: my\_prog.c \$(OBJECTS) \\
+my\_prog: \$(OBJECTS) \\
 \# Another phony rule (run 'make clean') \\
 clean: \\
 ~~~~rm -f my\_prog \$(OBJECTS)
